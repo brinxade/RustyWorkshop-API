@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+const chalk = require('chalk');
 
 class Logger {
     constructor(prefix="", postfix="") {
@@ -40,4 +40,4 @@ class Logger {
 }
 
 
-export {Logger};
+module.exports = {Logger};

@@ -1,4 +1,4 @@
-import {Logger} from './logger.js';
+const Logger = require('./logger').Logger;
 let stdin = process.openStdin();
 
 stdin.addListener("data", function(d) {

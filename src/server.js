@@ -1,15 +1,19 @@
-import express from 'express';
-import {Logger} from './core/logger.js';
-import session from 'express-session';
-import responseTime from 'response-time';
-import cors from 'cors';
-
-import './core/db.js';
-import './core/commandline.js';
-
-import router from '.core/router.js';
+const express = require('express');
+const Logger = require('./core/logger').Logger;
+const session = require('express-session');
+const responseTime = require('response-time');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
 console.clear();
+dotenv.config();
+const logger = new Logger();
+
+require('./core/db');
+require('./core/commandline');
+
+const router = require('./core/router');
+
 
 const app = express();
 const port = process.env.PORT || process.env.DEFAULT_PORT;
