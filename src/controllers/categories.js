@@ -5,8 +5,7 @@ module.exports = {
     get: async(req, res) => {
         let response = Object.assign({}, Response);
         let data = await categoriesModule.get();
-
-        res.json(typeof(data) == Array?data:[]);
+        res.json(data);
     }, 
     create: async(req, res) => {
         let response = Object.assign({}, Response);
