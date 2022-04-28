@@ -16,9 +16,6 @@ module.exports = {
         }
     },
     updateById: async(id,data)=>{
-        try{
-            
-        }
     },
     deleteById: async(id,data)=>{
 
