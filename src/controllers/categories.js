@@ -4,16 +4,16 @@ const Response = require('../core/response');
 module.exports = {
     get: async(req, res) => {
         let response = Object.assign({}, Response);
-        let data = categoriesModule.get();
+        let data = await categoriesModule.get();
 
-        response.data = typeof(data) === Array?data:[];
+        response.data = data;
         response.status = 1;
         response.text = `${response.data.length || 0} category(s) fetched`;
         res.json(response);
     }, 
     create: async(req, res) => {
         let response = Object.assign({}, Response);
-        let data = categoriesModule.create(req.body);
+        let data = await categoriesModule.create(req.body);
         if(data) {
             response.data = data;
             response.status = 1;
@@ -25,18 +25,23 @@ module.exports = {
     },
     edit: async(req, res) => {
         let response = Object.assign({}, Response);
-        if(categoriesModule.updateById(req.params.id, req.body)) {
+        if(await categoriesModule.updateById(req.params.id, req.body)) {
             response.status = 1;
             response.text = "Category updated";
+        } else {
+            response.text = "Failed to update category";
         }
         res.json(response);
     },
     delete: async(req, res) => {
         let response = Object.assign({}, Response);
-        if(categoriesModule.deleteById(req.params.id)) {
+        if(await categoriesModule.deleteById(req.params.id)) {
             response.status = 1;
             response.text = "Category deleted";
+        } else {
+            response.text = "Category with given id does not exist";
         }
+
         res.json(response);
     },
 };
