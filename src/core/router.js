@@ -1,6 +1,9 @@
 const express = require('express');
 const categoriesController = require('../controllers/categories');
 const usersController = require('../controllers/users');
+const advertController = require('../controllers/advert');
+const multer = require('multer');
+
 
 const router = express.Router();
 
@@ -13,5 +16,7 @@ router.get('/users', usersController.get);
 router.post('/users/create', usersController.create);
 router.patch('/users/edit/:id', usersController.edit);
 router.delete('/users/delete/:id', usersController.delete);
+
+router.post('/upload',advertController.uploadOne);
 
 module.exports = router;
