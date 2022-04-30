@@ -5,7 +5,18 @@ const logger = new Logger("[CATEGORY MOD]");
 
 module.exports = {
     get: async() => {
-        return await Categories.find({});
+        let data = await Categories.find({}).populate({
+            path: 'parent',
+            select: ['name']
+        }).lean();
+
+        data.forEach((dataItem, idx)=>{
+            if(data[idx].parent!=null) {
+                data[idx].parent = data[idx].parent.name;
+            }
+        });
+
+        return data;
     },
     create: async(data) => {
         // return false on category found with same name, or category failed to create
@@ -20,7 +31,6 @@ module.exports = {
             return doc;
         } catch(e) {
             logger.warn("Failed to create category");
-            console.log(e);
             return false;
         }
     },
