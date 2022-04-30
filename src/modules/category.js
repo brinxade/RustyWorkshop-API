@@ -11,9 +11,13 @@ module.exports = {
             return false;
         }
 
-        const doc = new Categories(data);
-        await doc.save();
-        return doc;
+        try {
+            const doc = new Categories(data);
+            await doc.save();
+            return doc;
+        } catch(e) {
+            return "Required fields missing";
+        }
     },
     updateById: async(id, data) => {
         try {

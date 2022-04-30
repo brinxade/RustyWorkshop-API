@@ -15,7 +15,8 @@ module.exports = {
             response.status = 1;
             response.text = "Category created";
         } else {
-            response.text = "Category with given name already exists";
+            response.text = data;
+            response.queryStatus = 0;
         }
         res.json(response);
     },
