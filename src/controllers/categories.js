@@ -1,5 +1,6 @@
 const categoriesModule = require('../modules/category');
 const Response = require('../core/response');
+const nullConvertor = require('../utility/nullConvertor');
 
 module.exports = {
     get: async(req, res) => {
@@ -9,14 +10,14 @@ module.exports = {
     }, 
     create: async(req, res) => {
         let response = Object.assign({}, Response);
+        nullConvertor(req.body);
         let data = await categoriesModule.create(req.body);
         if(data) {
             response.data = data;
             response.status = 1;
             response.text = "Category created";
         } else {
-            response.text = data;
-            response.queryStatus = 0;
+            response.text = "Failed to create category";
         }
         res.json(response);
     },

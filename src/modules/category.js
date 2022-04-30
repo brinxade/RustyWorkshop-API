@@ -1,4 +1,7 @@
+const { Logger } = require('../core/logger');
 const Categories = require('../models/category');
+
+const logger = new Logger("[CATEGORY MOD]");
 
 module.exports = {
     get: async() => {
@@ -16,7 +19,9 @@ module.exports = {
             await doc.save();
             return doc;
         } catch(e) {
-            return "Required fields missing";
+            logger.warn("Failed to create category");
+            console.log(e);
+            return false;
         }
     },
     updateById: async(id, data) => {
@@ -24,6 +29,7 @@ module.exports = {
             await Categories.findByIdAndUpdate(id, data);
             return true;
         } catch(e) {
+            logger.warn("Failed to update category", e);
             return false;
         }
     },
@@ -31,6 +37,7 @@ module.exports = {
         try {
             return await Categories.findByIdAndDelete(id);
         } catch(e) {
+            logger.warn("Failed to delete category", e);
             return false;
         }
     }
