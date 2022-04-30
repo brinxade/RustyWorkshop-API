@@ -13,8 +13,6 @@ require('./core/db');
 require('./core/commandline');
 
 const router = require('./core/router');
-
-
 const app = express();
 const port = process.env.PORT || process.env.DEFAULT_PORT;
 
@@ -23,16 +21,16 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+app.use(responseTime((req, res, time) => {
+    Logger.LogRequest(req, res, time);
+}));
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-}));
-
-// Logging
-app.use(responseTime((req, res, time) => {
-    Logger.LogRequest(req, res, time);
 }));
 
 // Routing

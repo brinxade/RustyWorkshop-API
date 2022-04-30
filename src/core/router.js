@@ -1,9 +1,9 @@
 const express = require('express');
+const multer = require('multer');
 const categoriesController = require('../controllers/categories');
 const usersController = require('../controllers/users');
-const advertController = require('../controllers/advert');
-const multer = require('multer');
-
+const storage = require('./multipart').serverStorage;
+const upload = multer({storage});
 
 const router = express.Router();
 
@@ -16,7 +16,5 @@ router.get('/users', usersController.get);
 router.post('/users/create', usersController.create);
 router.patch('/users/edit/:id', usersController.edit);
 router.delete('/users/delete/:id', usersController.delete);
-
-router.post('/upload',advertController.uploadOne);
 
 module.exports = router;

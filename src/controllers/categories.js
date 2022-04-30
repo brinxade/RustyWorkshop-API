@@ -11,6 +11,7 @@ module.exports = {
     create: async(req, res) => {
         let response = Object.assign({}, Response);
         nullConvertor(req.body);
+        req.body.featuredImg = req.file.path;
         let data = await categoriesModule.create(req.body);
         if(data) {
             response.data = data;

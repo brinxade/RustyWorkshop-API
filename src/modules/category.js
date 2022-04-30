@@ -1,5 +1,6 @@
 const { Logger } = require('../core/logger');
 const Categories = require('../models/category');
+const fs = require('fs');
 
 const logger = new Logger("[CATEGORY MOD]");
 
@@ -45,7 +46,14 @@ module.exports = {
     },
     deleteById: async(id) => {
         try {
-            return await Categories.findByIdAndDelete(id);
+            let doc = await Categories.findByIdAndDelete(id);
+            fs.exists(doc.featuredImg, (err1)=>{
+                fs.unlink(doc.featuredImg, (err2)=>{
+                    if(err2)
+                    logger.err(err2);
+                });
+            });
+            return doc;
         } catch(e) {
             logger.warn("Failed to delete category", e);
             return false;
